@@ -3,7 +3,6 @@
 export const SCHEDULED_SOURCE = 'https://e-redes.opendatasoft.com/explore/dataset/network-scheduling-work/';
 const API = 'https://e-redes.opendatasoft.com/api/explore/v2.1/catalog/datasets/network-scheduling-work/records';
 const LOCATION = 'Figueira da Foz';
-const FIGUEIRA_POSTCODE = '0000-000';
 const MAX_RESULTS = 100;
 
 const text = (value) => typeof value === 'string' ? value.trim() : '';
@@ -46,8 +45,8 @@ export async function fetchScheduledElectricity({ signal, timeoutMs = 12000 } = 
       records: records.map((row) => ({
         postcode: text(row.zipcode), municipality: text(row.municipality), parish: text(row.parish),
         startsAt: text(row.startdatetime), endsAt: text(row.enddatetime),
-        sourceUpdatedAt: text(row.updatedatetime), inFigueira da Foz: text(row.zipcode) === FIGUEIRA_POSTCODE,
-      })).sort((a, b) => Number(b.inFigueira da Foz) - Number(a.inFigueira da Foz) || a.startsAt.localeCompare(b.startsAt)),
+        sourceUpdatedAt: text(row.updatedatetime),
+      })).sort((a, b) => a.startsAt.localeCompare(b.startsAt)),
     };
   } catch (error) {
     if (timedOut) throw new Error('A consulta da E-REDES demorou demasiado tempo.');

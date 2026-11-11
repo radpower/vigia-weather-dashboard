@@ -149,10 +149,9 @@ function renderPower() {
   if (data.sourceUpdatedAt && Number.isFinite(Date.parse(data.sourceUpdatedAt)) && Date.now() - Date.parse(data.sourceUpdatedAt) > 24 * 60 * 60 * 1000) box.append(element('p', 'source-error', 'A fonte não é atualizada há mais de 24 horas.'));
   if (!data.records.length) box.append(element('p', '', 'Sem interrupções programadas anunciadas para o concelho nos dados recebidos.'));
   else {
-    const exact = data.records.filter((item) => item.inFigueira da Foz);
-    box.append(element('p', '', exact.length ? `Há ${exact.length} ${exact.length === 1 ? 'registo programado' : 'registos programados'} para o código postal de Figueira da Foz.` : 'Sem registos para o código postal de Figueira da Foz; há trabalhos noutros locais do concelho.'));
+    box.append(element('p', '', `Há ${data.records.length} interrupções programadas no concelho.`));
     const list = element('div', 'power-list');
-    for (const item of data.records) { const card = element('div', 'power-item'); card.append(element('strong', '', `${item.inFigueira da Foz ? 'Figueira da Foz · ' : ''}${item.parish || 'Freguesia não indicada'} · ${item.postcode || 'Código postal não indicado'}`), element('span', '', `Programado: ${wallTime(item.startsAt)} — ${wallTime(item.endsAt)}`)); list.append(card); } box.append(list);
+    for (const item of data.records) { const card = element('div', 'power-item'); card.append(element('strong', '', `${item.parish || 'Freguesia não indicada'} · ${item.postcode || 'Código postal não indicado'}`), element('span', '', `Programado: ${wallTime(item.startsAt)} — ${wallTime(item.endsAt)}`)); list.append(card); } box.append(list);
   }
   box.append(element('p', 'source-error', 'Isto não mostra avarias imprevistas nem confirma se tens eletricidade.'));
 }
